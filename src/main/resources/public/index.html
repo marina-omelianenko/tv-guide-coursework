@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Телепрограма</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <h1>Телепрограма</h1>
+    </div>
+    <div class="header-actions">
+      <div class="header-badge" id="programCount">0 передач</div>
+      <button class="admin-open-button" id="adminOpenButton" type="button">Адміністратор</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="viewer-panel" aria-labelledby="scheduleTitle">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Перегляд</p>
+          <h2 id="scheduleTitle">Розклад передач</h2>
+        </div>
+        <button class="ghost-button" id="refreshButton" type="button">Оновити</button>
+      </div>
+
+      <div class="toolbar" aria-label="Фільтри телепрограми">
+        <label>
+          <span>Канал</span>
+          <select id="channelFilter"></select>
+        </label>
+        <label>
+          <span>Сортування</span>
+          <select id="sortSelect">
+            <option value="time">За часом</option>
+            <option value="channel">За каналами</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="schedule-list" id="programList"></div>
+    </section>
+  </main>
+
+  <div class="admin-overlay hidden" id="adminOverlay">
+    <section class="admin-panel" aria-labelledby="adminTitle">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">Адміністратор</p>
+          <h2 id="adminTitle">Вхід адміністратора</h2>
+        </div>
+        <div class="admin-heading-actions">
+          <button class="ghost-button hidden" id="logoutButton" type="button">Вийти</button>
+          <button class="ghost-button" id="closeAdminButton" type="button">Закрити</button>
+        </div>
+      </div>
+
+      <form class="login-form" id="loginForm">
+        <label>
+          <span>Логін</span>
+          <input id="username" name="username" type="text" autocomplete="username" required>
+        </label>
+        <label>
+          <span>Пароль</span>
+          <input id="password" name="password" type="password" autocomplete="current-password" required>
+        </label>
+        <button class="primary-button" type="submit">Увійти</button>
+      </form>
+
+      <div class="admin-content hidden" id="adminContent">
+        <form class="editor-form" id="channelForm">
+          <h3>Канал</h3>
+          <div class="form-grid">
+            <label>
+              <span>Назва</span>
+              <input id="channelName" name="name" type="text" required>
+            </label>
+            <label>
+              <span>Категорія</span>
+              <input id="channelCategory" name="category" type="text" required>
+            </label>
+          </div>
+          <div class="form-actions">
+            <button class="primary-button" id="saveChannelButton" type="submit">Зберегти канал</button>
+            <button class="ghost-button" id="cancelChannelEdit" type="button">Скасувати</button>
+          </div>
+        </form>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Канал</th>
+                <th>Категорія</th>
+                <th>Дії</th>
+              </tr>
+            </thead>
+            <tbody id="channelRows"></tbody>
+          </table>
+        </div>
+
+        <form class="editor-form" id="programForm">
+          <h3>Передача</h3>
+          <div class="form-grid">
+            <label>
+              <span>Канал</span>
+              <select id="programChannel" name="channelId" required></select>
+            </label>
+            <label>
+              <span>Назва</span>
+              <input id="programTitle" name="title" type="text" required>
+            </label>
+            <label>
+              <span>Дата</span>
+              <input id="programDate" name="date" type="date" required>
+            </label>
+            <label>
+              <span>Початок</span>
+              <input id="programStart" name="startTime" type="time" required>
+            </label>
+            <label>
+              <span>Кінець</span>
+              <input id="programEnd" name="endTime" type="time" required>
+            </label>
+            <label>
+              <span>Жанр</span>
+              <input id="programGenre" name="genre" type="text" required>
+            </label>
+            <label>
+              <span>Вік</span>
+              <input id="programAge" name="ageRating" type="number" min="0" max="18" value="0" required>
+            </label>
+          </div>
+          <label>
+            <span>Опис</span>
+            <textarea id="programDescription" name="description" rows="3" required></textarea>
+          </label>
+          <div class="form-actions">
+            <button class="primary-button" id="saveProgramButton" type="submit">Зберегти передачу</button>
+            <button class="ghost-button" id="cancelProgramEdit" type="button">Скасувати</button>
+          </div>
+        </form>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Час</th>
+                <th>Передача</th>
+                <th>Канал</th>
+                <th>Дії</th>
+              </tr>
+            </thead>
+            <tbody id="programRows"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <p class="status-line" id="statusLine" role="status"></p>
+    </section>
+  </div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
