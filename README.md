@@ -1,109 +1,56 @@
 # Телепрограма
 
-Курсова робота з програмування, тема 23: вебзастосунок для перегляду телепрограми та керування каналами і передачами.
+Курсова робота, тема 23.
 
-## Функції
+Вебзастосунок для перегляду телепрограми. Користувач може переглядати передачі, фільтрувати їх за каналом і сортувати за часом або каналом. Адміністратор може додавати, редагувати та видаляти канали і передачі.
 
-- Користувач переглядає список передач.
-- Користувач фільтрує розклад за каналом.
-- Користувач сортує передачі за часом або за каналами.
-- Адміністратор додає, редагує та видаляє канали.
-- Адміністратор додає, редагує та видаляє передачі.
-- Дані зберігаються у файлах `data/channels.tsv` і `data/programs.tsv`.
+## Запуск в IntelliJ IDEA
 
-## Технології
-
-- Java 21.
-- Вбудований HTTP-сервер `com.sun.net.httpserver.HttpServer`.
-- HTML, CSS, JavaScript.
-- Файлове сховище TSV без зовнішніх бібліотек.
-
-## Запуск
-
-### В IntelliJ IDEA
-
-1. Відкрий IntelliJ IDEA.
-2. Обери `File` -> `Open`.
-3. Вибери папку проєкту:
+1. Відкрити папку проєкту в IntelliJ IDEA.
+2. Запустити клас:
 
 ```text
-/Users/mirinam./Documents/курсовая
+src/main/java/ua/course/tvguide/TvGuideApplication.java
 ```
 
-4. Якщо IntelliJ запитає, як відкрити проєкт, обери `Open as Project`.
-5. Дочекайся індексації Maven-проєкту.
-6. У верхній панелі обери конфігурацію `TvGuideApplication`.
-7. Натисни зелену кнопку запуску.
-8. Відкрий у браузері:
+3. Після запуску відкрити в браузері:
 
 ```text
 http://localhost:8080
 ```
 
-Альтернативно можна відкрити файл `src/main/java/ua/course/tvguide/TvGuideApplication.java` і натиснути зелений трикутник біля методу `main`.
-
-### Через термінал
-
-```bash
-sh scripts/run.sh
-```
-
-Після запуску відкрий:
-
-```text
-http://localhost:8080
-```
-
-Дані адміністратора:
+## Адміністратор
 
 ```text
 Логін: admin
 Пароль: admin123
 ```
 
-Можна передати інший порт:
+## Запуск через термінал
 
 ```bash
-sh scripts/run.sh 9090
+sh scripts/run.sh
 ```
 
-## Структура
+## Відкриття з телефона
+
+Телефон і комп'ютер мають бути в одній Wi-Fi мережі.
+
+На телефоні потрібно відкривати не `localhost`, а IP-адресу комп'ютера, наприклад:
 
 ```text
-src/main/java/ua/course/tvguide/
-  TvGuideApplication.java          головний клас запуску
-  model/Channel.java               модель телеканалу
-  model/Program.java               модель телепередачі
-  repository/TvGuideRepository.java робота з даними
-  web/ApiHandler.java              REST API
-  web/JsonUtil.java                простий JSON-помічник
-  web/StaticFileHandler.java       видача HTML/CSS/JS
+http://192.168.1.10:8080
+```
 
+IP-адресу Mac можна подивитися в налаштуваннях Wi-Fi.
+
+## Основні файли
+
+```text
+src/main/java/ua/course/tvguide/TvGuideApplication.java
+src/main/java/ua/course/tvguide/model/
+src/main/java/ua/course/tvguide/repository/
+src/main/java/ua/course/tvguide/web/
 src/main/resources/public/
-  index.html                       інтерфейс застосунку
-  styles.css                       оформлення
-  app.js                           логіка сторінки
-
 data/
-  channels.tsv                     канали
-  programs.tsv                     передачі
 ```
-
-## API
-
-```text
-GET    /api/channels
-POST   /api/channels
-PUT    /api/channels/{id}
-DELETE /api/channels/{id}
-
-GET    /api/programs?channelId=1&sort=time
-POST   /api/programs
-PUT    /api/programs/{id}
-DELETE /api/programs/{id}
-
-POST   /api/login
-GET    /api/health
-```
-
-Запити на створення, редагування та видалення потребують заголовок `X-Admin-Token`, який сторінка отримує після входу адміністратора.
